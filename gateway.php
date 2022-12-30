@@ -501,9 +501,9 @@ class Gateway {
 			'deviceTimeZone'			=> '0',
 			'deviceCapabilities'		=> '',
 			'deviceScreenResolution'	=> '1x1x1',
-			'deviceAcceptContent'		=> (isset($_SERVER['HTTP_ACCEPT']) ? htmlentities($_SERVER['HTTP_ACCEPT']) : null),
-			'deviceAcceptEncoding'		=> (isset($_SERVER['HTTP_ACCEPT_ENCODING']) ? htmlentities($_SERVER['HTTP_ACCEPT_ENCODING']) : null),
-			'deviceAcceptLanguage'		=> (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? htmlentities($_SERVER['HTTP_ACCEPT_LANGUAGE']) : null),
+			'deviceAcceptContent'		=> (isset($_SERVER['HTTP_ACCEPT']) ? htmlentities($_SERVER['HTTP_ACCEPT']) : '*/*'),
+			'deviceAcceptEncoding'		=> (isset($_SERVER['HTTP_ACCEPT_ENCODING']) ? htmlentities($_SERVER['HTTP_ACCEPT_ENCODING']) : '*'),
+			'deviceAcceptLanguage'		=> (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? htmlentities($_SERVER['HTTP_ACCEPT_LANGUAGE']) : 'en-gb;q=0.001'),
 			'deviceAcceptCharset'		=> (isset($_SERVER['HTTP_ACCEPT_CHARSET']) ? htmlentities($_SERVER['HTTP_ACCEPT_CHARSET']) : null),
 		);
 
@@ -515,6 +515,8 @@ class Gateway {
 			}
 		}
 
+		$lang = (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? json_encode($_SERVER['HTTP_ACCEPT_LANGUAGE']) : '""');
+
 		$ret = <<<EOS
 			<form {$form_attrs}>
 				{$form_fields}
@@ -525,7 +527,7 @@ class Gateway {
 				var screen_height = (window && window.screen ? window.screen.height : '0');
 				var screen_depth = (window && window.screen && window.screen.colorDepth && screen_depths.indexOf(window.screen.colorDepth) >= 0 ? window.screen.colorDepth : '0');
 				var identity = (window && window.navigator ? window.navigator.userAgent : '');
-				var language = (window && window.navigator ? (window.navigator.language ? window.navigator.language : window.navigator.browserLanguage) : '');
+				var language = (window && window.navigator ? (window.navigator.language ? window.navigator.language : window.navigator.browserLanguage) + ';q=0.001,' : '') + {$lang};
 				var timezone = (new Date()).getTimezoneOffset();
 				var java = (window && window.navigator ? navigator.javaEnabled() : false);
 				var fields = document.forms.collectBrowserInfo.elements;
