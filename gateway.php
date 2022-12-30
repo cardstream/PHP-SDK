@@ -445,7 +445,7 @@ class Gateway {
 
 		// Mark as partially signed if required
 		if ($partial) {
-			$ret . '|' . $partial;
+			$ret .= ('|' . $partial);
 		}
 
 		return $ret;
