@@ -14,12 +14,12 @@ class Gateway {
 	/**
 	 * @var string	Gateway Hosted API Endpoint
 	 */
-	static public $hostedUrl = 'https://gateway.example.com/hosted/';
+	static public $hostedUrl = 'https://gateway.cardstream.com/hosted/';
 
 	/**
 	 * @var string	Gateway Direct API Endpoint
 	 */
-	static public $directUrl = 'https://gateway.example.com/direct/';
+	static public $directUrl = 'https://gateway.cardstream.com/direct/';
 
 	/**
 	 * @var string	Merchant Account Id or Alias
